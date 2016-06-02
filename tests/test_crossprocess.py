@@ -38,7 +38,7 @@ class TestCrossprocess(object):
         :param script: script to copy
         """
         tmpfile = tempfile.NamedTemporaryFile()
-        shutil.copy(script, tmpfile.name)
+        shutil.copyfile(script, tmpfile.name)
 
         return tmpfile
 
@@ -85,6 +85,7 @@ class TestCrossprocess(object):
         fscript = self.copy_script(self.get_script('transient_module'))
         expected = os.path.basename(fscript.name)
         assert expected == self.read_from_stdout(run_script(fscript.name))
+        fscript.close()
 
     def test_run_script_persistence(self):
         """
