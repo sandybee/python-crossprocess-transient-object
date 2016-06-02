@@ -38,9 +38,11 @@ class TestCrossprocess(object):
         :param script: script to copy
         """
         tmpfile = tempfile.NamedTemporaryFile()
-        shutil.copyfile(script, tmpfile.name)
+        name = tmpfile.name
+        tmpfile.close()
+        shutil.copyfile(script, name)
 
-        return tmpfile
+        return name
 
     def test_run_script(self):
         """
@@ -82,10 +84,10 @@ class TestCrossprocess(object):
         """
         project module is accessible from a subprocess even for copy
         """
-        fscript = self.copy_script(self.get_script('transient_module'))
-        expected = os.path.basename(fscript.name)
-        assert expected == self.read_from_stdout(run_script(fscript.name))
-        fscript.close()
+        script = self.copy_script(self.get_script('transient_module'))
+        expected = os.path.basename(script)
+        assert expected == self.read_from_stdout(run_script(script))
+        os.unlink(script)
 
     def test_run_script_persistence(self):
         """
