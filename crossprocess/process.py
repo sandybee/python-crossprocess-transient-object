@@ -22,7 +22,6 @@ def run_script(script, object=None):
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        env=os.environ
     )
 
     result = proc.communicate()
