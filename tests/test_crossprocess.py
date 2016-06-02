@@ -60,10 +60,14 @@ class TestCrossprocess(object):
         """
         cross process sys path
         """
+        expected = os.path.join(
+            os.path.dirname(__file__),
+            'mydir'
+        )
+        sys.path.append(expected)
         script = self.get_script('syspath')
-        expected = [os.path.dirname(script)] + sys.path
-        assert "\n".join(expected).strip() == self.read_from_stdout(
-            run_script(script))
+
+        assert expected in self.read_from_stdout(run_script(script))
 
     def test_run_script_permits_transient_module(self):
         """
